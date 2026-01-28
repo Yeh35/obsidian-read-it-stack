@@ -1,0 +1,9 @@
+{
+  "id": "read-it-stack",
+  "name": "Read-it Stack",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Visualize your reading progress as a stack of book spines",
+  "author": "",
+  "isDesktopOnly": false
+}

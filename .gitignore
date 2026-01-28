@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+main.js
+*.js.map
+
+# Obsidian
+data.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
