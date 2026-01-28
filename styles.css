@@ -64,6 +64,31 @@
     transform: translateX(8px);
 }
 
+/* Zigzag stacking effect - alternating left/right offset */
+.read-it-stack-spine:nth-child(odd) {
+    transform: translateX(-10px);
+}
+
+.read-it-stack-spine:nth-child(even) {
+    transform: translateX(10px);
+}
+
+.read-it-stack-spine:nth-child(odd):hover {
+    transform: translateX(5px);
+}
+
+.read-it-stack-spine:nth-child(even):hover {
+    transform: translateX(25px);
+}
+
+.read-it-stack-spine:nth-child(odd):active {
+    transform: translateX(-2px);
+}
+
+.read-it-stack-spine:nth-child(even):active {
+    transform: translateX(18px);
+}
+
 /* Gradient overlay for 3D effect */
 .read-it-stack-spine-gradient {
     position: absolute;
@@ -176,6 +201,79 @@
 }
 
 /* ============================================
+   IMAGE SPINE STYLES
+   ============================================ */
+
+/* Image spine base */
+.read-it-stack-spine-image {
+    background-color: var(--background-secondary);
+}
+
+/* Image container */
+.read-it-stack-spine-img-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+/* Rotated image element */
+.read-it-stack-spine-img {
+    display: block;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    object-fit: cover;
+}
+
+/* Overlay for text readability on image spines */
+.read-it-stack-spine-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.1) 30%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.1) 70%,
+        rgba(0, 0, 0, 0.15) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Title container overlay for image spines */
+.read-it-stack-spine-title-overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    border-radius: 3px;
+    padding: 2px 6px;
+    margin: 0 4px;
+}
+
+.read-it-stack-spine-title-overlay .read-it-stack-spine-title {
+    color: #ffffff;
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Page count for image spines */
+.read-it-stack-spine-image .read-it-stack-spine-pages {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1px 4px;
+    border-radius: 2px;
+}
+
+/* ============================================
    DARK MODE ADJUSTMENTS
    ============================================ */
 
@@ -199,6 +297,26 @@
 
 .theme-dark .read-it-stack-surface {
     --read-it-stack-surface-color: #5D4E37;
+}
+
+.theme-dark .read-it-stack-spine-image-overlay {
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.15) 30%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.15) 70%,
+        rgba(0, 0, 0, 0.25) 100%
+    );
+}
+
+.theme-dark .read-it-stack-spine-title-overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.6) 50%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
 }
 
 /* ============================================
