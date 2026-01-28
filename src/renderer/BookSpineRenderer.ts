@@ -12,11 +12,12 @@ export class BookSpineRenderer {
     }
 
     render(container: HTMLElement, renderedBook: RenderedBook): void {
-        const { book, height, displayColor } = renderedBook;
+        const { book, height, width, displayColor } = renderedBook;
         const displayTitle = book.displayTitle || book.title;
+        const hasSpineImage = !!book.spineImage;
 
         const spine = container.createDiv({
-            cls: `read-it-stack-spine`,
+            cls: `read-it-stack-spine${hasSpineImage ? " read-it-stack-spine-image" : ""}`,
             attr: {
                 "data-book-path": book.filePath,
                 "aria-label": `${displayTitle} - ${book.pages} pages`
@@ -25,35 +26,86 @@ export class BookSpineRenderer {
 
         // Apply dynamic styles
         spine.style.height = `${height}px`;
-        spine.style.backgroundColor = displayColor;
-        spine.style.color = getContrastTextColor(displayColor);
-        spine.style.width = `${this.settings.spineWidth}px`;
+        spine.style.width = `${width}px`;
         spine.style.borderRadius = `${this.settings.borderRadius}px`;
 
-        // Add gradient overlay for 3D effect
-        const gradientOverlay = spine.createDiv({
-            cls: "read-it-stack-spine-gradient"
-        });
+        if (hasSpineImage && book.spineImage) {
+            // Image-based rendering with rotation
+            spine.style.backgroundColor = displayColor; // Fallback color
 
-        // Add top edge highlight
-        const topEdge = spine.createDiv({
-            cls: "read-it-stack-spine-edge-top"
-        });
-        topEdge.style.backgroundColor = adjustColorBrightness(displayColor, 20);
+            const spineWidth = width;
 
-        // Add bottom edge shadow
-        const bottomEdge = spine.createDiv({
-            cls: "read-it-stack-spine-edge-bottom"
-        });
-        bottomEdge.style.backgroundColor = adjustColorBrightness(displayColor, -20);
+            // Create image container
+            const imgContainer = spine.createDiv({
+                cls: "read-it-stack-spine-img-container"
+            });
+
+            // Create image element
+            const img = imgContainer.createEl("img", {
+                cls: "read-it-stack-spine-img",
+                attr: {
+                    src: book.spineImage,
+                    alt: displayTitle
+                }
+            });
+
+            // Adjust dimensions after image loads
+            img.onload = () => {
+                const naturalWidth = img.naturalWidth;
+                const naturalHeight = img.naturalHeight;
+
+                // After -90deg rotation:
+                // - original height becomes visual width
+                // - original width becomes visual height
+                // We want visual width = spineWidth
+                const scale = spineWidth / naturalHeight;
+                const spineHeight = naturalWidth * scale;
+
+                // For CSS: set img dimensions BEFORE rotation
+                // After rotation: img.height -> visual width, img.width -> visual height
+                img.style.height = `${spineWidth}px`;  // becomes visual width
+                img.style.width = `${spineHeight}px`;   // becomes visual height
+
+                // Set spine and container dimensions
+                spine.style.height = `${spineHeight}px`;
+                imgContainer.style.width = `${spineWidth}px`;
+                imgContainer.style.height = `${spineHeight}px`;
+            };
+
+            // Add overlay for better text readability
+            spine.createDiv({
+                cls: "read-it-stack-spine-image-overlay"
+            });
+        } else {
+            // Color-based rendering
+            spine.style.backgroundColor = displayColor;
+            spine.style.color = getContrastTextColor(displayColor);
+
+            // Add gradient overlay for 3D effect
+            spine.createDiv({
+                cls: "read-it-stack-spine-gradient"
+            });
+
+            // Add top edge highlight
+            const topEdge = spine.createDiv({
+                cls: "read-it-stack-spine-edge-top"
+            });
+            topEdge.style.backgroundColor = adjustColorBrightness(displayColor, 20);
+
+            // Add bottom edge shadow
+            const bottomEdge = spine.createDiv({
+                cls: "read-it-stack-spine-edge-bottom"
+            });
+            bottomEdge.style.backgroundColor = adjustColorBrightness(displayColor, -20);
+        }
 
         // Add title text
         const titleContainer = spine.createDiv({
-            cls: "read-it-stack-spine-title-container"
+            cls: `read-it-stack-spine-title-container${hasSpineImage ? " read-it-stack-spine-title-overlay" : ""}`
         });
 
         const titleText = titleContainer.createSpan({
-            text: this.truncateTitle(displayTitle, height),
+            text: this.truncateTitle(displayTitle, width),
             cls: "read-it-stack-spine-title"
         });
 
@@ -80,8 +132,8 @@ export class BookSpineRenderer {
         spine.setAttribute("title", tooltipLines.join("\n"));
     }
 
-    private truncateTitle(title: string, height: number): string {
-        const maxChars = Math.floor((this.settings.spineWidth - 24) / (this.settings.fontSize * 0.6));
+    private truncateTitle(title: string, width: number): string {
+        const maxChars = Math.floor((width - 24) / (this.settings.fontSize * 0.6));
 
         if (title.length <= maxChars) return title;
 

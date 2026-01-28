@@ -4,9 +4,15 @@ import { formatTitle, DEFAULT_TITLE_FORMAT } from "../utils/templateUtils";
 
 export class BookDataParser {
     private app: App;
+    private spineImageField: string;
 
-    constructor(app: App) {
+    constructor(app: App, spineImageField: string = "spine") {
         this.app = app;
+        this.spineImageField = spineImageField;
+    }
+
+    setSpineImageField(field: string): void {
+        this.spineImageField = field;
     }
 
     async getBooks(options: CodeBlockOptions): Promise<BookData[]> {
@@ -48,11 +54,18 @@ export class BookDataParser {
 
         const tags = cache ? (getAllTags(cache) || []) : [];
 
+        // Extract spine image path
+        const spineImageRaw = this.extractSpineImage(fm);
+        const spineImage = spineImageRaw
+            ? this.resolveImagePath(spineImageRaw, file.path)
+            : null;
+
         return {
             title: fm.title || fm.book_title || fm["book-title"] || file.basename,
             filename: file.basename,
             pages: this.parseNumber(fm.pages || fm.page_count, 200) ?? 200,
             color: fm.color || fm.spine_color || null,
+            spineImage: spineImage,
             status: this.parseStatus(fm.status),
             filePath: file.path,
             tags: tags,
@@ -61,6 +74,85 @@ export class BookDataParser {
             dateFinished: fm.date_finished || fm.finished,
             frontmatter: { ...fm }
         };
+    }
+
+    private extractSpineImage(fm: Record<string, unknown>): string | null {
+        // Check configured field name first
+        const configuredValue = fm[this.spineImageField];
+        if (typeof configuredValue === "string" && configuredValue.trim()) {
+            return configuredValue.trim();
+        }
+
+        // Check common variations as fallback
+        const variations = [
+            "spine", "spine_image", "spineImage", "spine-image",
+            "book_spine", "bookSpine", "book-spine"
+        ];
+
+        for (const field of variations) {
+            if (field === this.spineImageField) continue;
+            const value = fm[field];
+            if (typeof value === "string" && value.trim()) {
+                return value.trim();
+            }
+        }
+
+        return null;
+    }
+
+    private resolveImagePath(imagePath: string, sourcePath: string): string | null {
+        // 1. External URL (http/https)
+        if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+            return imagePath;
+        }
+
+        let resolvedPath: string | null = null;
+
+        // 2. Wiki-link format: [[image.png]] or [[image.png|alias]]
+        if (imagePath.startsWith("[[") && imagePath.endsWith("]]")) {
+            const linkPath = imagePath.slice(2, -2).split("|")[0].trim();
+            const file = this.app.metadataCache.getFirstLinkpathDest(linkPath, sourcePath);
+            if (file) {
+                resolvedPath = file.path;
+            }
+        }
+        // 3. Markdown link format: ![](path/to/image.png) or ![alt](path)
+        else if (imagePath.startsWith("![")) {
+            const match = imagePath.match(/!\[.*?\]\((.*?)\)/);
+            if (match) {
+                const extractedPath = match[1];
+                if (extractedPath.startsWith("http://") || extractedPath.startsWith("https://")) {
+                    return extractedPath;
+                }
+                const file = this.app.metadataCache.getFirstLinkpathDest(extractedPath, sourcePath);
+                if (file) {
+                    resolvedPath = file.path;
+                }
+            }
+        }
+        // 4. Vault absolute path (starts with /)
+        else if (imagePath.startsWith("/")) {
+            resolvedPath = imagePath.slice(1);
+        }
+        // 5. Relative path or plain filename
+        else {
+            const file = this.app.metadataCache.getFirstLinkpathDest(imagePath, sourcePath);
+            if (file) {
+                resolvedPath = file.path;
+            } else {
+                resolvedPath = imagePath;
+            }
+        }
+
+        // Convert to vault resource URI
+        if (resolvedPath) {
+            const file = this.app.vault.getAbstractFileByPath(resolvedPath);
+            if (file instanceof TFile) {
+                return this.app.vault.getResourcePath(file);
+            }
+        }
+
+        return null;
     }
 
     private parseStatus(value: unknown): BookStatus {

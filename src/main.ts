@@ -12,7 +12,7 @@ export default class ReadItStackPlugin extends Plugin {
     async onload(): Promise<void> {
         await this.loadSettings();
 
-        this.bookDataParser = new BookDataParser(this.app);
+        this.bookDataParser = new BookDataParser(this.app, this.settings.spineImageField);
 
         this.registerMarkdownCodeBlockProcessor(
             "read-it-stack",
@@ -49,6 +49,10 @@ export default class ReadItStackPlugin extends Plugin {
     async saveSettings(): Promise<void> {
         await this.saveData(this.settings);
         this.registerCSSVariables();
+
+        if (this.bookDataParser) {
+            this.bookDataParser.setSpineImageField(this.settings.spineImageField);
+        }
     }
 
     registerCSSVariables(): void {
@@ -58,7 +62,7 @@ export default class ReadItStackPlugin extends Plugin {
         );
         document.body.style.setProperty(
             "--read-it-stack-min-height",
-            `${this.settings.minSpineHeight}px`
+            `${this.settings.baseThickness}px`
         );
     }
 

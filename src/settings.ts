@@ -4,14 +4,15 @@ import type { ReadItStackSettings } from "./types";
 
 export const DEFAULT_SETTINGS: ReadItStackSettings = {
     spineWidth: 200,
-    minSpineHeight: 30,
-    maxSpineHeight: 150,
-    pagesPerPixel: 5,
+    baseThickness: 15,
+    maxThickness: 80,
+    pxPerPage: 0.1,
     fontFamily: "Georgia, serif",
     fontSize: 12,
     borderRadius: 8,
     showPageCount: false,
-    openInNewTab: false
+    openInNewTab: false,
+    spineImageField: "spine"
 };
 
 export class ReadItStackSettingTab extends PluginSettingTab {
@@ -55,42 +56,53 @@ export class ReadItStackSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 }));
 
-        // Height Calculation Section
-        containerEl.createEl("h3", { text: "Height Calculation" });
+        new Setting(containerEl)
+            .setName("Spine image field")
+            .setDesc("Frontmatter field name for custom spine images (e.g., 'spine', 'spine_image', 'book_spine')")
+            .addText(text => text
+                .setPlaceholder("spine")
+                .setValue(this.plugin.settings.spineImageField)
+                .onChange(async (value) => {
+                    this.plugin.settings.spineImageField = value || "spine";
+                    await this.plugin.saveSettings();
+                }));
+
+        // Thickness Calculation Section
+        containerEl.createEl("h3", { text: "Thickness Calculation" });
 
         new Setting(containerEl)
-            .setName("Pages per pixel")
-            .setDesc("How many pages equal one pixel of height (lower = taller spines)")
+            .setName("Base thickness")
+            .setDesc("Base thickness for all books in pixels")
             .addSlider(slider => slider
-                .setLimits(1, 20, 1)
-                .setValue(this.plugin.settings.pagesPerPixel)
+                .setLimits(10, 30, 1)
+                .setValue(this.plugin.settings.baseThickness)
                 .setDynamicTooltip()
                 .onChange(async (value) => {
-                    this.plugin.settings.pagesPerPixel = value;
+                    this.plugin.settings.baseThickness = value;
                     await this.plugin.saveSettings();
                 }));
 
         new Setting(containerEl)
-            .setName("Minimum spine height")
-            .setDesc("Minimum height for book spines in pixels")
+            .setName("Pixels per page")
+            .setDesc("Additional pixels per page (e.g., 0.1 = 300 pages adds 30px)")
             .addSlider(slider => slider
-                .setLimits(20, 100, 5)
-                .setValue(this.plugin.settings.minSpineHeight)
+                .setLimits(0.05, 0.3, 0.01)
+                .setValue(this.plugin.settings.pxPerPage)
                 .setDynamicTooltip()
                 .onChange(async (value) => {
-                    this.plugin.settings.minSpineHeight = value;
+                    this.plugin.settings.pxPerPage = value;
                     await this.plugin.saveSettings();
                 }));
 
         new Setting(containerEl)
-            .setName("Maximum spine height")
-            .setDesc("Maximum height for book spines in pixels")
+            .setName("Maximum thickness")
+            .setDesc("Maximum thickness for books in pixels")
             .addSlider(slider => slider
-                .setLimits(100, 300, 10)
-                .setValue(this.plugin.settings.maxSpineHeight)
+                .setLimits(50, 300, 5)
+                .setValue(this.plugin.settings.maxThickness)
                 .setDynamicTooltip()
                 .onChange(async (value) => {
-                    this.plugin.settings.maxSpineHeight = value;
+                    this.plugin.settings.maxThickness = value;
                     await this.plugin.saveSettings();
                 }));
 

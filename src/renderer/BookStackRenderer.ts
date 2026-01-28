@@ -48,11 +48,15 @@ export class BookStackRenderer {
     }
 
     private calculateHeights(books: BookData[]): RenderedBook[] {
-        const { minSpineHeight, maxSpineHeight, pagesPerPixel } = this.settings;
+        const { baseThickness, maxThickness, pxPerPage, spineWidth } = this.settings;
 
         return books.map((book, index) => {
-            let height = book.pages / pagesPerPixel;
-            height = Math.max(minSpineHeight, Math.min(maxSpineHeight, height));
+            // Calculate height: base + (pages × pxPerPage)
+            let height = baseThickness + (book.pages * pxPerPage);
+            height = Math.min(maxThickness, height);
+
+            // Width is fixed (book length should be consistent)
+            const width = spineWidth;
 
             // Determine color: use book's color if specified, otherwise use pastel palette
             let displayColor: string;
@@ -65,6 +69,7 @@ export class BookStackRenderer {
             return {
                 book,
                 height,
+                width,
                 displayColor
             };
         });

@@ -5,6 +5,7 @@ export interface BookData {
     filename: string;
     pages: number;
     color: string | null;
+    spineImage?: string | null;
     status: BookStatus;
     filePath: string;
     tags: string[];
@@ -34,18 +35,20 @@ export type SortOption = "title" | "pages" | "dateFinished" | "rating";
 export interface RenderedBook {
     book: BookData;
     height: number;
+    width: number;
     displayColor: string;
 }
 
 // Plugin settings
 export interface ReadItStackSettings {
     spineWidth: number;
-    minSpineHeight: number;
-    maxSpineHeight: number;
-    pagesPerPixel: number;
+    baseThickness: number;
+    maxThickness: number;
+    pxPerPage: number;
     fontFamily: string;
     fontSize: number;
     borderRadius: number;
     showPageCount: boolean;
     openInNewTab: boolean;
+    spineImageField: string;
 }
