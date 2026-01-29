@@ -1,13 +1,14 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import type ReadItStackPlugin from "./main";
 import type { ReadItStackSettings } from "./types";
+import { getAvailableFonts, isCustomFont } from "./utils/fontUtils";
 
 export const DEFAULT_SETTINGS: ReadItStackSettings = {
     spineWidth: 200,
     baseThickness: 15,
     maxThickness: 80,
     pxPerPage: 0.1,
-    fontFamily: "Georgia, serif",
+    fontFamily: "'11StreetGothic', sans-serif",
     fontSize: 12,
     borderRadius: 8,
     showPageCount: false,
@@ -109,15 +110,47 @@ export class ReadItStackSettingTab extends PluginSettingTab {
         // Typography Section
         containerEl.createEl("h3", { text: "Typography" });
 
+        const availableFonts = getAvailableFonts();
+        const currentFont = this.plugin.settings.fontFamily;
+        const isCustom = isCustomFont(currentFont);
+
         new Setting(containerEl)
             .setName("Font family")
             .setDesc("Font for book titles on spines")
+            .addDropdown(dropdown => {
+                availableFonts.forEach(font => {
+                    dropdown.addOption(font.value, font.name);
+                });
+                dropdown.addOption("__custom__", "Custom...");
+
+                dropdown.setValue(isCustom ? "__custom__" : currentFont);
+                dropdown.onChange(async (value) => {
+                    if (value === "__custom__") {
+                        customFontSetting.settingEl.show();
+                    } else {
+                        customFontSetting.settingEl.hide();
+                        this.plugin.settings.fontFamily = value;
+                        await this.plugin.saveSettings();
+                    }
+                });
+            });
+
+        const customFontSetting = new Setting(containerEl)
+            .setName("Custom font")
+            .setDesc("Enter a custom font family (e.g., 'Nanum Myeongjo', serif)")
             .addText(text => text
-                .setValue(this.plugin.settings.fontFamily)
+                .setPlaceholder("'Font Name', fallback")
+                .setValue(isCustom ? currentFont : "")
                 .onChange(async (value) => {
-                    this.plugin.settings.fontFamily = value;
-                    await this.plugin.saveSettings();
+                    if (value.trim()) {
+                        this.plugin.settings.fontFamily = value;
+                        await this.plugin.saveSettings();
+                    }
                 }));
+
+        if (!isCustom) {
+            customFontSetting.settingEl.hide();
+        }
 
         new Setting(containerEl)
             .setName("Font size")

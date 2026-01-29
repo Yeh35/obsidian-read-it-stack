@@ -2,6 +2,28 @@
    READ-IT STACK PLUGIN STYLES
    ============================================ */
 
+/* 11Street Gothic Web Font */
+@font-face {
+    font-family: '11StreetGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-4@1.1/11StreetGothic-KorLight.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '11StreetGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-4@1.1/11StreetGothic-Kor.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '11StreetGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-4@1.1/11StreetGothic-KorBold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
 /* CSS Variables */
 :root {
     --read-it-stack-spine-width: 200px;
@@ -142,7 +164,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
     font-weight: 500;
     letter-spacing: 0.3px;
 }
@@ -261,15 +282,11 @@
 
 .read-it-stack-spine-title-overlay .read-it-stack-spine-title {
     color: #ffffff;
-    text-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.8),
-        0 0 4px rgba(0, 0, 0, 0.4);
 }
 
 /* Page count for image spines */
 .read-it-stack-spine-image .read-it-stack-spine-pages {
     color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     background: rgba(0, 0, 0, 0.3);
     padding: 1px 4px;
     border-radius: 2px;
@@ -291,10 +308,6 @@
         inset 0 2px 4px rgba(255, 255, 255, 0.1),
         inset 0 -2px 4px rgba(0, 0, 0, 0.2),
         4px 4px 14px rgba(0, 0, 0, 0.5);
-}
-
-.theme-dark .read-it-stack-spine-title {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .theme-dark .read-it-stack-surface {
