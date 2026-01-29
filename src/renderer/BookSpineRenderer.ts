@@ -38,14 +38,33 @@ export class BookSpineRenderer {
                 cls: "read-it-stack-spine-img-container"
             });
 
-            // Create image element - CSS handles sizing with object-fit: cover
-            imgContainer.createEl("img", {
+            // Create image element
+            const img = imgContainer.createEl("img", {
                 cls: "read-it-stack-spine-img",
                 attr: {
                     src: book.spineImage,
                     alt: displayTitle
                 }
             });
+
+            // 이미지 비율 유지, 최대 크기 제한
+            img.onload = () => {
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                const maxWidth = width;
+                const maxHeight = this.settings.maxThickness;
+
+                let finalWidth = maxWidth;
+                let finalHeight = finalWidth / aspectRatio;
+
+                // 높이가 최대값 초과시 높이 기준으로 재계산
+                if (finalHeight > maxHeight) {
+                    finalHeight = maxHeight;
+                    finalWidth = finalHeight * aspectRatio;
+                }
+
+                spine.style.width = `${Math.round(finalWidth)}px`;
+                spine.style.height = `${Math.round(finalHeight)}px`;
+            };
         } else {
             // Color-based rendering
             spine.style.backgroundColor = displayColor;
