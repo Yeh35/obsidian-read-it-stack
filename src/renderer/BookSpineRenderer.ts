@@ -30,51 +30,21 @@ export class BookSpineRenderer {
         spine.style.borderRadius = `${this.settings.borderRadius}px`;
 
         if (hasSpineImage && book.spineImage) {
-            // Image-based rendering with rotation
+            // Image-based rendering
             spine.style.backgroundColor = displayColor; // Fallback color
 
-            const spineWidth = width;
-
-            // Create image container
+            // Create image container - fills the entire spine
             const imgContainer = spine.createDiv({
                 cls: "read-it-stack-spine-img-container"
             });
 
-            // Create image element
-            const img = imgContainer.createEl("img", {
+            // Create image element - CSS handles sizing with object-fit: cover
+            imgContainer.createEl("img", {
                 cls: "read-it-stack-spine-img",
                 attr: {
                     src: book.spineImage,
                     alt: displayTitle
                 }
-            });
-
-            // Adjust dimensions after image loads
-            img.onload = () => {
-                const naturalWidth = img.naturalWidth;
-                const naturalHeight = img.naturalHeight;
-
-                // After -90deg rotation:
-                // - original height becomes visual width
-                // - original width becomes visual height
-                // We want visual width = spineWidth
-                const scale = spineWidth / naturalHeight;
-                const spineHeight = naturalWidth * scale;
-
-                // For CSS: set img dimensions BEFORE rotation
-                // After rotation: img.height -> visual width, img.width -> visual height
-                img.style.height = `${spineWidth}px`;  // becomes visual width
-                img.style.width = `${spineHeight}px`;   // becomes visual height
-
-                // Set spine and container dimensions
-                spine.style.height = `${spineHeight}px`;
-                imgContainer.style.width = `${spineWidth}px`;
-                imgContainer.style.height = `${spineHeight}px`;
-            };
-
-            // Add overlay for better text readability
-            spine.createDiv({
-                cls: "read-it-stack-spine-image-overlay"
             });
         } else {
             // Color-based rendering
@@ -99,18 +69,20 @@ export class BookSpineRenderer {
             bottomEdge.style.backgroundColor = adjustColorBrightness(displayColor, -20);
         }
 
-        // Add title text
-        const titleContainer = spine.createDiv({
-            cls: `read-it-stack-spine-title-container${hasSpineImage ? " read-it-stack-spine-title-overlay" : ""}`
-        });
+        // Add title text (only if no spine image)
+        if (!hasSpineImage) {
+            const titleContainer = spine.createDiv({
+                cls: "read-it-stack-spine-title-container"
+            });
 
-        const titleText = titleContainer.createSpan({
-            text: this.truncateTitle(displayTitle, width),
-            cls: "read-it-stack-spine-title"
-        });
+            const titleText = titleContainer.createSpan({
+                text: this.truncateTitle(displayTitle, width),
+                cls: "read-it-stack-spine-title"
+            });
 
-        titleText.style.fontFamily = this.settings.fontFamily;
-        titleText.style.fontSize = `${this.settings.fontSize}px`;
+            titleText.style.fontFamily = this.settings.fontFamily;
+            titleText.style.fontSize = `${this.settings.fontSize}px`;
+        }
 
         // Add page count if enabled
         if (this.settings.showPageCount && height > 50) {

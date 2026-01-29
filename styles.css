@@ -209,19 +209,21 @@
     background-color: var(--background-secondary);
 }
 
-/* Image container */
+/* Image container - fills the entire spine */
 .read-it-stack-spine-img-container {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
-/* Rotated image element */
+/* Image element - fills container with cover fit */
 .read-it-stack-spine-img {
     display: block;
-    transform: rotate(-90deg);
-    transform-origin: center center;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
