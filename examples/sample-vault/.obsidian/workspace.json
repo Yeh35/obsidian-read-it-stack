@@ -1,0 +1,289 @@
+{
+  "main": {
+    "id": "48af16efc5537c91",
+    "type": "split",
+    "children": [
+      {
+        "id": "a3c059dd2d9753c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2ad092cd083a891b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Reading Dashboard.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Reading Dashboard"
+            }
+          },
+          {
+            "id": "3ab091a1b69b89ac",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Reading Dashboard.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Reading Dashboard"
+            }
+          },
+          {
+            "id": "09a4cbc769c737e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Books/Fiction/Harry Potter 3.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Harry Potter 3"
+            }
+          },
+          {
+            "id": "bd866c7c0b1104d7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Books/Technical/Code Complete.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Code Complete"
+            }
+          },
+          {
+            "id": "c3401fd52688495a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Books/Technical/Clean Code.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Clean Code"
+            }
+          },
+          {
+            "id": "f73e6154b61129c7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Books/Technical/Code Complete.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Code Complete"
+            }
+          },
+          {
+            "id": "246eb9df7045936e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Books/Technical/핸즈온 머신러닝.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "핸즈온 머신러닝"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ef2d6415a563029b",
+    "type": "split",
+    "children": [
+      {
+        "id": "ec07683c4f6e2e90",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7670071886254974",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "65b5d06dc8899dac",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "132b2b231338c094",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "25737ffa3345e09d",
+    "type": "split",
+    "children": [
+      {
+        "id": "490bf45b25a75189",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ef7ab2097c727231",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Books/Fiction/Harry Potter 3.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Harry Potter 3"
+            }
+          },
+          {
+            "id": "b57c6d8e97464097",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Books/Fiction/Harry Potter 3.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Harry Potter 3"
+            }
+          },
+          {
+            "id": "412b3c6573ca8ac5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c6b8186e0c45e12c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f6cfff09c6323983",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Books/Fiction/Harry Potter 3.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Harry Potter 3"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "2ad092cd083a891b",
+  "lastOpenFiles": [
+    "assets/spines/HarryPotter3.png.sb-7adca32f-bCnvX4",
+    "Books/Fiction/Harry Potter 3.md",
+    "Reading Dashboard.md",
+    "Books/Technical/Code Complete.md",
+    "Books/Technical/Clean Code.md",
+    "assets/spines/CleanCode.jpeg",
+    "Books/Technical/핸즈온 머신러닝.md",
+    "README.md",
+    "Books/Fiction/The Little Prince.md",
+    "Books/Technical/(Book) 핸즈온 머신러닝 - 오렐리앙 제롱.md",
+    "assets/spines/spine_핸즈온 머신러닝.jpg",
+    "Books/Fiction/The Lord of the Rings.md",
+    "Books/Fiction/The Hobbit.md",
+    "Books/Fiction/Harry Potter 2.md",
+    "Books/Fiction/Harry Potter 1.md",
+    "Books/Technical/Refactoring.md"
+  ]
+}
