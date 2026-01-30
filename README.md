@@ -115,9 +115,9 @@ limit: 10
 | `author` | No | Author name | `"Robert C. Martin"` |
 | `status` | No | Reading status | `reading` |
 | `color` | No | Custom spine color | `"#4CAF50"` or `"gold"` |
-| `spine` | No | Custom spine image | `"[[spine.png]]"` |
+| `spine` | No | Custom spine image path (see below) | `"[[spine.png]]"` |
 | `rating` | No | Your rating | `5` |
-| `date_finished` | No | Completion date | `2024-01-15` |
+| `dateFinished` | No | Completion date | `2024-01-15` |
 
 ### Status Values
 
@@ -131,6 +131,25 @@ limit: 10
 ### Named Colors
 
 Supported named colors: `red`, `blue`, `green`, `yellow`, `orange`, `purple`, `pink`, `brown`, `gray`, `grey`, `black`, `white`, `gold`, `navy`, `teal`, `maroon`
+
+### Custom Spine Images
+
+You can use custom spine images instead of colored backgrounds:
+
+```yaml
+---
+title: "Harry Potter"
+pages: 309
+spine: "[[assets/spines/harry-potter.png]]"
+---
+```
+
+**Tips for spine images:**
+- Use vertical/portrait-oriented images for best results
+- Recommended aspect ratio: tall and narrow (matching book spine proportions)
+- Supported formats: PNG, JPG, JPEG, WebP
+- Store images in your vault (e.g., `assets/spines/` folder)
+- Use Obsidian's wiki-link format: `"[[path/to/image.png]]"`
 
 ## Title Format Templates
 
@@ -171,9 +190,6 @@ See the [examples](examples/) folder for:
 - [Custom Styling](examples/docs/custom-styling.md) - Colors, images, and templates
 - [Advanced Queries](examples/docs/advanced-queries.md) - Complex usage patterns
 
-## Screenshots
-
-*Screenshots will be added here*
 
 ## Development
 
