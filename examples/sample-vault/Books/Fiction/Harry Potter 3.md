@@ -4,7 +4,7 @@ author: "J.K. Rowling"
 pages: 435
 status: reading
 color: "#0D6EFD"
-spine: assets/spines/HarryPotter3.png
+spine: assets/spines/HarryPotter3_space.png
 tags:
   - book
   - fiction

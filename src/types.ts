@@ -51,4 +51,7 @@ export interface ReadItStackSettings {
     showPageCount: boolean;
     openInNewTab: boolean;
     spineImageField: string;
+    // Image trimming settings
+    enableImageTrim: boolean;
+    trimTolerance: number;
 }

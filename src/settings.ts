@@ -13,7 +13,9 @@ export const DEFAULT_SETTINGS: ReadItStackSettings = {
     borderRadius: 8,
     showPageCount: false,
     openInNewTab: false,
-    spineImageField: "spine"
+    spineImageField: "spine",
+    enableImageTrim: false,
+    trimTolerance: 30
 };
 
 export class ReadItStackSettingTab extends PluginSettingTab {
@@ -65,6 +67,28 @@ export class ReadItStackSettingTab extends PluginSettingTab {
                 .setValue(this.plugin.settings.spineImageField)
                 .onChange(async (value) => {
                     this.plugin.settings.spineImageField = value || "spine";
+                    await this.plugin.saveSettings();
+                }));
+
+        new Setting(containerEl)
+            .setName("Auto-trim spine images")
+            .setDesc("Automatically detect and remove margins from spine images")
+            .addToggle(toggle => toggle
+                .setValue(this.plugin.settings.enableImageTrim)
+                .onChange(async (value) => {
+                    this.plugin.settings.enableImageTrim = value;
+                    await this.plugin.saveSettings();
+                }));
+
+        new Setting(containerEl)
+            .setName("Trim tolerance")
+            .setDesc("Color difference threshold for margin detection (0-100)")
+            .addSlider(slider => slider
+                .setLimits(0, 100, 5)
+                .setValue(this.plugin.settings.trimTolerance)
+                .setDynamicTooltip()
+                .onChange(async (value) => {
+                    this.plugin.settings.trimTolerance = value;
                     await this.plugin.saveSettings();
                 }));
 

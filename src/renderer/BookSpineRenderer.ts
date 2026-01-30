@@ -1,6 +1,7 @@
 import { App, TFile } from "obsidian";
 import { ReadItStackSettings, RenderedBook } from "../types";
 import { adjustColorBrightness, getContrastTextColor } from "../utils/colorUtils";
+import { detectImageBounds, createCroppedImageDataUrl } from "../utils/imageTrimUtils";
 
 export class BookSpineRenderer {
     private app: App;
@@ -49,7 +50,26 @@ export class BookSpineRenderer {
 
             // 이미지 비율 유지, 최대 크기 제한
             img.onload = () => {
-                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                let contentWidth = img.naturalWidth;
+                let contentHeight = img.naturalHeight;
+
+                // Apply image trimming if enabled
+                if (this.settings.enableImageTrim) {
+                    const bounds = detectImageBounds(img, this.settings.trimTolerance);
+
+                    // Only crop if bounds differ from original
+                    if (bounds.width < img.naturalWidth || bounds.height < img.naturalHeight) {
+                        const croppedDataUrl = createCroppedImageDataUrl(img, bounds);
+                        if (croppedDataUrl) {
+                            // Replace image source with cropped version
+                            img.src = croppedDataUrl;
+                            contentWidth = bounds.width;
+                            contentHeight = bounds.height;
+                        }
+                    }
+                }
+
+                const aspectRatio = contentWidth / contentHeight;
                 const maxWidth = width;
                 const maxHeight = this.settings.maxThickness;
 
