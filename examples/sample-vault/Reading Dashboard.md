@@ -1,4 +1,4 @@
-# My Reading Dashboard
+	# My Reading Dashboard
 
 Welcome to my reading dashboard! This note showcases the Read-It Stack plugin with various filtering and sorting options.
 
