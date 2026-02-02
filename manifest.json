@@ -3,7 +3,7 @@
   "name": "Read-it Stack",
   "version": "1.0.0",
   "minAppVersion": "1.0.0",
-  "description": "Visualize your reading progress as a stack of book spines",
+  "description": "Visualize your reading progress as a stack of book spines.",
   "author": "yeh35",
   "authorUrl": "https://github.com/yeh35",
   "isDesktopOnly": false
