@@ -36,7 +36,7 @@ export default class ReadItStackPlugin extends Plugin {
             return;
         }
 
-        const books = await this.bookDataParser.getBooks(options);
+        const books = this.bookDataParser.getBooks(options);
 
         const renderer = new BookStackRenderer(this.app, this.settings, el);
         renderer.render(books, options);

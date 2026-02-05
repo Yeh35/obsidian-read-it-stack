@@ -13,11 +13,17 @@ export const DEFAULT_TITLE_FORMAT = "{{title}}";
  */
 export function formatTitle(template: string, book: BookData): string {
     // 공백, 하이픈, 언더스코어를 포함한 변수명 지원
-    const variablePattern = /\{\{([\w\s\-]+)\}\}/g;
+    const variablePattern = /\{\{([\w\s-]+)\}\}/g;
 
     return template.replace(variablePattern, (match, variableName: string) => {
         const value = getBookValue(book, variableName.trim());
-        return value !== undefined && value !== null ? String(value) : "";
+        if (value === undefined || value === null) {
+            return "";
+        }
+        if (typeof value === "object") {
+            return "";
+        }
+        return String(value);
     });
 }
 
@@ -25,7 +31,7 @@ export function formatTitle(template: string, book: BookData): string {
  * 변수명 정규화 (공백, 하이픈, 언더스코어 제거 후 소문자)
  */
 function normalizeKey(key: string): string {
-    return key.toLowerCase().replace(/[\s\-_]/g, "");
+    return key.toLowerCase().replace(/[\s_-]/g, "");
 }
 
 /**

@@ -15,7 +15,7 @@ export class BookDataParser {
         this.spineImageField = field;
     }
 
-    async getBooks(options: CodeBlockOptions): Promise<BookData[]> {
+    getBooks(options: CodeBlockOptions): BookData[] {
         let files = this.app.vault.getMarkdownFiles();
 
         if (options.folder) {

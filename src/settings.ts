@@ -30,10 +30,8 @@ export class ReadItStackSettingTab extends PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
 
-        containerEl.createEl("h2", { text: "Read-it Stack Settings" });
-
         // Appearance Section
-        containerEl.createEl("h3", { text: "Appearance" });
+        new Setting(containerEl).setName("Appearance").setHeading();
 
         new Setting(containerEl)
             .setName("Spine width")
@@ -92,8 +90,8 @@ export class ReadItStackSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 }));
 
-        // Thickness Calculation Section
-        containerEl.createEl("h3", { text: "Thickness Calculation" });
+        // Thickness calculation section
+        new Setting(containerEl).setName("Thickness calculation").setHeading();
 
         new Setting(containerEl)
             .setName("Base thickness")
@@ -131,8 +129,8 @@ export class ReadItStackSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 }));
 
-        // Typography Section
-        containerEl.createEl("h3", { text: "Typography" });
+        // Typography section
+        new Setting(containerEl).setName("Typography").setHeading();
 
         const availableFonts = getAvailableFonts();
         const currentFont = this.plugin.settings.fontFamily;
@@ -198,8 +196,8 @@ export class ReadItStackSettingTab extends PluginSettingTab {
                     await this.plugin.saveSettings();
                 }));
 
-        // Behavior Section
-        containerEl.createEl("h3", { text: "Behavior" });
+        // Behavior section
+        new Setting(containerEl).setName("Behavior").setHeading();
 
         new Setting(containerEl)
             .setName("Open in new tab")

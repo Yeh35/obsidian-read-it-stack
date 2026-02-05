@@ -161,7 +161,7 @@ export class BookSpineRenderer {
     private openBookNote(filePath: string): void {
         const file = this.app.vault.getAbstractFileByPath(filePath);
         if (file && file instanceof TFile) {
-            this.app.workspace.getLeaf(this.settings.openInNewTab).openFile(file);
+            void this.app.workspace.getLeaf(this.settings.openInNewTab).openFile(file);
         }
     }
 }
