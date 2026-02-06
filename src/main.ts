@@ -24,11 +24,11 @@ export default class ReadItStackPlugin extends Plugin {
         this.registerCSSVariables();
     }
 
-    async processCodeBlock(
+    processCodeBlock(
         source: string,
         el: HTMLElement,
         ctx: MarkdownPostProcessorContext
-    ): Promise<void> {
+    ): void {
         const codeBlockParser = new CodeBlockParser();
         const options = codeBlockParser.parse(source);
 

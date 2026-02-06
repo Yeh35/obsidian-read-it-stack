@@ -138,8 +138,8 @@ export class BookSpineRenderer {
 
         // Add hover tooltip
         const tooltipLines = [displayTitle];
-        if (book.author) tooltipLines.push(`By: ${book.author}`);
-        tooltipLines.push(`Pages: ${book.pages}`);
+        if (book.author) tooltipLines.push(`by ${book.author}`);
+        tooltipLines.push(`${book.pages} pages`);
         spine.setAttribute("title", tooltipLines.join("\n"));
     }
 

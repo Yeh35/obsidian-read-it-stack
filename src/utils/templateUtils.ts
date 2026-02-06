@@ -17,13 +17,13 @@ export function formatTitle(template: string, book: BookData): string {
 
     return template.replace(variablePattern, (match, variableName: string) => {
         const value = getBookValue(book, variableName.trim());
-        if (value === undefined || value === null) {
-            return "";
+        if (typeof value === "string") {
+            return value;
         }
-        if (typeof value === "object") {
-            return "";
+        if (typeof value === "number" || typeof value === "boolean") {
+            return String(value);
         }
-        return String(value);
+        return "";
     });
 }
 
