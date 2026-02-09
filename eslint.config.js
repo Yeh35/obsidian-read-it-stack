@@ -1,12 +1,14 @@
+import { defineConfig } from "eslint/config";
 import globals from "globals";
 import json from "@eslint/json";
 import tseslint from "typescript-eslint";
 import obsidianmd from "eslint-plugin-obsidianmd";
 
-export default tseslint.config(
+export default defineConfig(
 	...obsidianmd.configs.recommended,
 	{
 		files: ["**/*.ts"],
+		extends: [tseslint.configs.recommendedTypeChecked],
 		languageOptions: {
 			globals: globals.browser,
 			parserOptions: {
@@ -25,6 +27,6 @@ export default tseslint.config(
 		},
 	},
 	{
-		ignores: ["main.js", "esbuild.config.mjs", "node_modules/**"]
+		ignores: ["main.js", "*.config.{js,mjs}", "node_modules/**"]
 	}
 );
