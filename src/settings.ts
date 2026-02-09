@@ -61,7 +61,7 @@ export class ReadItStackSettingTab extends PluginSettingTab {
             .setName("Spine image field")
             .setDesc("Frontmatter field name for custom spine images (e.g., 'spine', 'spine_image', 'book_spine')")
             .addText(text => text
-                .setPlaceholder("spine")
+                .setPlaceholder("Spine")
                 .setValue(this.plugin.settings.spineImageField)
                 .onChange(async (value) => {
                     this.plugin.settings.spineImageField = value || "spine";
@@ -159,9 +159,9 @@ export class ReadItStackSettingTab extends PluginSettingTab {
 
         const customFontSetting = new Setting(containerEl)
             .setName("Custom font")
-            .setDesc("Enter a custom font family (e.g., 'Nanum Myeongjo', serif)")
+            .setDesc("Enter a custom font family (e.g., 'Nanum Myeongjo', serif).")
             .addText(text => text
-                .setPlaceholder("'Font Name', fallback")
+                .setPlaceholder("'Font name', fallback")
                 .setValue(isCustom ? currentFont : "")
                 .onChange(async (value) => {
                     if (value.trim()) {
