@@ -60,19 +60,21 @@ export class BookDataParser {
             ? this.resolveImagePath(spineImageRaw, file.path)
             : null;
 
+        const fmRecord = fm as Record<string, unknown>;
+        const rawTitle = fmRecord.title ?? fmRecord.book_title ?? fmRecord["book-title"];
         return {
-            title: fm.title || fm.book_title || fm["book-title"] || file.basename,
+            title: typeof rawTitle === "string" ? rawTitle : file.basename,
             filename: file.basename,
-            pages: this.parseNumber(fm.pages || fm.page_count, 200) ?? 200,
-            color: fm.color || fm.spine_color || null,
+            pages: this.parseNumber(fmRecord.pages ?? fmRecord.page_count, 200) ?? 200,
+            color: (fmRecord.color ?? fmRecord.spine_color ?? null) as string | null,
             spineImage: spineImage,
-            status: this.parseStatus(fm.status),
+            status: this.parseStatus(fmRecord.status),
             filePath: file.path,
             tags: tags,
-            author: fm.author,
-            rating: this.parseNumber(fm.rating, undefined),
-            dateFinished: fm.date_finished || fm.finished,
-            frontmatter: { ...fm }
+            author: fmRecord.author as string | undefined,
+            rating: this.parseNumber(fmRecord.rating, undefined),
+            dateFinished: (fmRecord.date_finished ?? fmRecord.finished) as string | undefined,
+            frontmatter: { ...fmRecord }
         };
     }
 

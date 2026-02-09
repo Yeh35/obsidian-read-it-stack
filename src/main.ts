@@ -16,7 +16,8 @@ export default class ReadItStackPlugin extends Plugin {
 
         this.registerMarkdownCodeBlockProcessor(
             "read-it-stack",
-            this.processCodeBlock.bind(this)
+            (source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) =>
+                this.processCodeBlock(source, el, ctx)
         );
 
         this.addSettingTab(new ReadItStackSettingTab(this.app, this));
@@ -43,7 +44,7 @@ export default class ReadItStackPlugin extends Plugin {
     }
 
     async loadSettings(): Promise<void> {
-        this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+        this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData() as Partial<ReadItStackSettings>);
     }
 
     async saveSettings(): Promise<void> {

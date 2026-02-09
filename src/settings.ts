@@ -159,9 +159,9 @@ export class ReadItStackSettingTab extends PluginSettingTab {
 
         const customFontSetting = new Setting(containerEl)
             .setName("Custom font")
-            .setDesc("Enter a custom font family (e.g., 'Nanum Myeongjo', serif).")
+            .setDesc("Custom font family (e.g., 'my-font', serif)")
             .addText(text => text
-                .setPlaceholder("'Font name', fallback")
+                .setPlaceholder("'font name', fallback")
                 .setValue(isCustom ? currentFont : "")
                 .onChange(async (value) => {
                     if (value.trim()) {
